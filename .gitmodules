@@ -1,0 +1,3 @@
+[submodule "Unix/snail"]
+	path = Unix/snail
+	url = git@github.com:ruleless/snail.git
