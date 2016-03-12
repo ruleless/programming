@@ -1,5 +1,6 @@
 #include "UTest.h"
 #include "BSearch.hpp"
+#include "QSort.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UTest);
 
@@ -30,4 +31,14 @@ void UTest::test_bsearch()
 	CPPUNIT_ASSERT(bsearch(arr, 0, sizeof(arr)/sizeof(int), 10001) == 7);
 	CPPUNIT_ASSERT(bsearch(arr, 0, sizeof(arr)/sizeof(int), 10002) == -1);
 	CPPUNIT_ASSERT(bsearch(arr, 0, sizeof(arr)/sizeof(int), -3213) == -1);
+}
+
+void UTest::test_qsort()
+{
+	int arr[] = {37281, 321, 321,5, -3123, 54353, 53, -132,};
+	qSort(arr, 0, sizeof(arr)/sizeof(int)-1);
+	for (int i = 0; i < sizeof(arr)/sizeof(int)-1; ++i)
+	{		
+		CPPUNIT_ASSERT(arr[i]<=arr[i+1]);
+	}	
 }
