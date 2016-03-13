@@ -6,7 +6,8 @@ class UTest : public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE(UTest);
 	CPPUNIT_TEST(test_bsearch);
 	CPPUNIT_TEST(test_qsort);
-	CPPUNIT_TEST_SUITE_END();
+	CPPUNIT_TEST(test_msort);
+	CPPUNIT_TEST_SUITE_END();	
   public:
     UTest();
     virtual ~UTest();
@@ -17,4 +18,5 @@ class UTest : public CppUnit::TestFixture
 
 	void test_bsearch();
 	void test_qsort();
+	void test_msort();
 };
