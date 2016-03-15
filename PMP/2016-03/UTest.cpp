@@ -2,6 +2,7 @@
 #include "BSearch.hpp"
 #include "QSort.hpp"
 #include "MSort.hpp"
+#include "Trie.h"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UTest);
 
@@ -52,4 +53,15 @@ void UTest::test_msort()
 	{		
 		CPPUNIT_ASSERT(arr[i]<=arr[i+1]);
 	}	
+}
+
+void UTest::test_trie()
+{
+	Trie *root = trie_new();
+	trie_insert(root, "test");
+	trie_insert(root, "test");
+	trie_insert(root, "test");
+	CPPUNIT_ASSERT(trie_getword(root, "test") == 3);
+	CPPUNIT_ASSERT(trie_getword(root, "test1") == 0);
+	trie_destroy(root);
 }
