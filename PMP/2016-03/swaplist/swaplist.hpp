@@ -42,7 +42,7 @@ class SwapList
 		pthread_mutex_unlock(&this->mMutex);
 	}
 
-	typedef void (Callback *)(T val);
+	typedef void (* Callback)(T val);
 	void flush(Callback cb)
 	{
 		pthread_mutex_lock(&this->mMutex);
@@ -58,7 +58,7 @@ class SwapList
 		
 		pthread_mutex_unlock(&this->mMutex);
 
-		TList::iterator it = this->mOutList->begin();
+		typename TList::iterator it = this->mOutList->begin();
 		for (; it != this->mOutList->end(); ++it)
 		{
 			cb(*it);
@@ -70,7 +70,7 @@ class SwapList
 	{
 		pthread_mutex_lock(&this->mMutex);
 		while (this->mInList->empty())
-		{			
+		{
 			pthread_cond_wait(&this->mCond, &this->mMutex);
 		}		
 		pthread_mutex_unlock(&this->mMutex);
