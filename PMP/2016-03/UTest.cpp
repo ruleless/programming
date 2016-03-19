@@ -65,3 +65,11 @@ void UTest::test_trie()
 	CPPUNIT_ASSERT(trie_getword(root, "test1") == 0);
 	trie_destroy(root);
 }
+
+extern int getCombination(int m, int n);
+void UTest::test_combination()
+{
+	printf("total count:%d\n", getCombination(5, 2));
+	printf("total count:%d\n", getCombination(6, 2));
+	printf("total count:%d\n", getCombination(6, 3));
+}

@@ -8,6 +8,7 @@ class UTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(test_qsort);
 	CPPUNIT_TEST(test_msort);
 	CPPUNIT_TEST(test_trie);
+	CPPUNIT_TEST(test_combination);
 	CPPUNIT_TEST_SUITE_END();	
   public:
     UTest();
@@ -21,4 +22,5 @@ class UTest : public CppUnit::TestFixture
 	void test_qsort();
 	void test_msort();
 	void test_trie();
+	void test_combination();
 };
