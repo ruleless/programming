@@ -3,6 +3,7 @@
 #include "QSort.hpp"
 #include "MSort.hpp"
 #include "Trie.h"
+#include "AdjList.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UTest);
 
@@ -72,4 +73,24 @@ void UTest::test_combination()
 	printf("total count:%d\n", getCombination(5, 2));
 	printf("total count:%d\n", getCombination(6, 2));
 	printf("total count:%d\n", getCombination(6, 3));
+}
+
+void UTest::test_adjlist()
+{
+	static const int N = 10;
+	typedef alg::AdjList<N, N*N, float> TAdjList;
+	TAdjList a;
+	a.addEdge(0, 1, 10.7);
+	a.addEdge(0, 2, 100.1);
+	a.addEdge(1, 5, 10.3);
+	a.addEdge(2, 6, 1);
+	for (int i = 0; i < N; ++i)
+	{
+		printf("%d:", i);
+		for (TAdjList::TEdge *e = a.v[i]; e != NULL; e = e->next)
+		{
+			printf("(%d, %f)", e->to, e->w);
+		}
+		printf("\n");
+	}
 }
