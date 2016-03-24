@@ -4,6 +4,7 @@
 #include "MSort.hpp"
 #include "Trie.h"
 #include "AdjList.hpp"
+#include "Dijkstra.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UTest);
 
@@ -93,4 +94,21 @@ void UTest::test_adjlist()
 		}
 		printf("\n");
 	}
+}
+
+void UTest::test_dijkstra()
+{
+	static const int N = 10;
+	typedef alg::AdjList<N, N*N, float> TAdjList;
+	TAdjList a;
+	a.addEdge(0, 1, 10.7);
+	a.addEdge(0, 2, 100.1);
+	a.addEdge(1, 2, 10.2);
+
+	float res[N];
+	for (int i = 0; i < N; ++i)
+		res[i] = 99999999.f;
+	alg::dijkstra<float, 3>(3, a.v, 0, res);
+	for (int i = 0; i < 3; ++i)
+		printf("res[%d]=%f\n", i, res[i]);
 }
