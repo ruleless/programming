@@ -11,6 +11,7 @@ class UTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(test_combination);
 	CPPUNIT_TEST(test_adjlist);
 	CPPUNIT_TEST(test_dijkstra);
+	CPPUNIT_TEST(test_strstr);
 	CPPUNIT_TEST_SUITE_END();	
   public:
     UTest();
@@ -28,4 +29,6 @@ class UTest : public CppUnit::TestFixture
 
 	void test_adjlist();
 	void test_dijkstra();
+
+	void test_strstr();
 };

@@ -5,6 +5,7 @@
 #include "Trie.h"
 #include "AdjList.hpp"
 #include "Dijkstra.hpp"
+#include "strstr.hpp"
 
 CPPUNIT_TEST_SUITE_REGISTRATION(UTest);
 
@@ -111,4 +112,13 @@ void UTest::test_dijkstra()
 	alg::dijkstra<float, 3>(3, a.v, 0, res);
 	for (int i = 0; i < 3; ++i)
 		printf("res[%d]=%f\n", i, res[i]);
+}
+
+void UTest::test_strstr()
+{
+	CPPUNIT_ASSERT(alg::strstr("abcdef", "abcdefg") == -1);
+	CPPUNIT_ASSERT(alg::strstr("abcdef", "a") == 0);
+	CPPUNIT_ASSERT(alg::strstr("abcdef", "abc") == 0);
+	CPPUNIT_ASSERT(alg::strstr("abcdef", "bcd") == 1);
+	CPPUNIT_ASSERT(alg::strstr("abcdef", "be") == -1);
 }
