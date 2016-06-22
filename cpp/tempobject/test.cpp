@@ -54,5 +54,6 @@ int main(int argc, char *argv[])
 {
     Obj o1 = testFunc1();
 	Obj o2 = testFunc2();
+	getchar();
     return 0;
 }
