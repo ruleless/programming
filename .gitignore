@@ -1,6 +1,8 @@
 *.o
 *.out
 *.d
+*.i
+*.s
 main
 temp
 tmp
