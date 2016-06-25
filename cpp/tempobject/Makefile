@@ -1,6 +1,6 @@
 CC:= clang
 CXX:= clang++
-CPPFLAGS:= -O0
+CPPFLAGS:= -O0 -g
 LDFLAGS:=
 
 all: test.out
