@@ -156,6 +156,10 @@
 	<References>
 	</References>
 	<Files>
+		<File
+			RelativePath="..\cpp\tempobject\test.cpp"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
