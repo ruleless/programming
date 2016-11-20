@@ -16,4 +16,4 @@ fstat.o:fstat.cpp
 	$(cc) -c fstat.cpp -o fstat.o $(CFLAGS)
 
 clean:
-	-rm objs fstat
+	-rm $(objs) fstat
