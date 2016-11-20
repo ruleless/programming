@@ -1,6 +1,0 @@
-[submodule "Unix/snail"]
-	path = Unix/snail
-	url = git@github.com:ruleless/snail.git
-[submodule "Python/pylib"]
-	path = Python/pylib
-	url = git@github.com:ruleless/pylib.git
