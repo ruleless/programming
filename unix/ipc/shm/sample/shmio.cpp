@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	if (fd < 0)
 		errQuit("open file failed.");
 
-	void *ptr = mmap(NULL, MAX_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+	char *ptr = (char *)mmap(NULL, MAX_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
 	ftruncate(fd, 0);
 
 	int n = 0;

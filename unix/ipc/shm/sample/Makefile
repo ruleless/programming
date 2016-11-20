@@ -1,30 +1,27 @@
-SNAIL_ROOT:=../../../snail
-SNAIL_INC:=$(SNAIL_ROOT)/include
-SNAIL_LIB:=$(SNAIL_ROOT)/lib
+COMMON_DIR:=../../../common/
 
-LIB_DIR:=$(SNAIL_ROOT)/lib
-
-CXXFLAGS:=-g -Wall -I $(subst :, -I,$(SNAIL_INC))
-LDFLAGS:=-L $(LIB_DIR) -lsnail -lrt
+CXXFLAGS:=-g -Wall -I $(subst :, -I,$(COMMON_DIR))
+VPATH:= $(COMMON_DIR)
+LDFLAGS:= -lrt
 
 .PHONY:=lib all clean
 
-all:lib bin
+all: bin
 
-lib:
-	cd $(SNAIL_ROOT) && $(MAKE)
 bin:shmcreate shmunlink shmio
 
-shmcreate:shmcreate.o
+shmcreate:shmcreate.o common.o
 	$(CXX) $^ $(LDFLAGS) -o $@
-shmunlink:shmunlink.o
+shmunlink:shmunlink.o common.o
 	$(CXX) $^ $(LDFLAGS) -o $@
-shmio:shmio.o
+shmio:shmio.o common.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 
 shmcreate.o:shmcreate.cpp shmdef.h
 shmunlink.o:shmunlink.cpp shmdef.h
 shmio.o:shmio.cpp shmdef.h
+
+common.o:common.cpp common.h
 
 clean:
 	-rm *.o shmcreate shmunlink shmio

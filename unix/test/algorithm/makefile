@@ -1,4 +1,4 @@
-commdir:=../../common:../../common/algorithm
+commdir:=../../common
 incdir:=$(commdir)
 srcdir:=$(incdir)
 

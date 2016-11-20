@@ -79,6 +79,15 @@
 # define MAX_PATH 260
 #endif
 
+#ifndef min
+# define min(a, b) ((a) < (b) ? (a) : (b))
+#endif
+#ifndef max
+# define max(a, b) ((a) > (b) ? (a) : (b))
+#endif
+
+#define PRINT_INTVAL(val) printf("%s:%d\n", #val, val)
+
 /* 输出错误信息并退出
  * @param msg: 错误信息
  * @param bErrno: 是否打印errno错误消息

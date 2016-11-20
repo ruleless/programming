@@ -22,4 +22,4 @@ PrintTID.o:PrintTID.cpp
 
 .PHONY:clean
 clean:
-	-rm objs
+	-rm $(objs)

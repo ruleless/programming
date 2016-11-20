@@ -1,4 +1,4 @@
-commdir:=../../../snail/lib/common:../../../snail/lib
+commdir:=../../../common
 incdir:=$(commdir)
 srcdir:=$(incdir)
 
