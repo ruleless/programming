@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
 
-# 运算符/表达式
+# expression support by python
 def expression():
-    # 算数运算符
+    # numeric operators
     a = 10
     b = 3
-    print("算数表达式：")
+    print("numeric expression:")
     print("%d + %d = %d" % (a, b, a + b))
     print("%d - %d = %d" % (a, b, a - b))
     print("%d * %d = %d" % (a, b, a * b))
@@ -16,11 +16,19 @@ def expression():
     print("%d %% %d = %d" % (a, b, a % b))
     print("%d ** %d = %d" % (a, b, a ** b))
 
-    # 赋值运算符
-    print("赋值表达式支持：=, +=, -=, *=, /=, //=, %=, **=")
+    # bit operators
+    a = 0x0001
+    b = 0x0010
+    print("bit operators")
+    print("0x%04x & 0x%04x = 0x%04x" % (a, b, a & b))
+    print("0x%04x | 0x%04x = 0x%04x" % (a, b, a | b))
+    print("0x%04x ^ 0x%04x = 0x%04x" % (a, b, a ^ b))
+    print("~0 = %d" % (~0))
+    print("1>>1 = %d" % (1 >> 1))
+    print("1<<1 = %d" % (1 << 1))
     
-    # 关系运算符
-    print("关系表达式：")
+    # relational operators
+    print("relational operators:")
     print("%d > %d = %s" % (a, b, a > b))
     print("%d < %d = %s" % (a, b, a < b))
     print("%d == %d = %s" % (a, b, a == b))
@@ -28,40 +36,87 @@ def expression():
     print("%d >= %d = %s" % (a, b, a >= b))
     print("%d <= %d = %s" % (a, b, a <= b))
 
-    # 逻辑运算符
+    # logic operators
     a = True
     b = False
-    print("逻辑表达式：")
+    print("logic operators:")
     print("%s and %s = %s" % (a, b, a and b))
     print("%s or %s = %s" % (a, b, a or b))
     print("not %s = %s" % (a, not a))
 
-    # 位运算符
-    a = 0x0001
-    b = 0x0010
-    print("位运算符：")
-    print("0x%04x & 0x%04x = 0x%04x" % (a, b, a & b))
-    print("0x%04x | 0x%04x = 0x%04x" % (a, b, a | b))
-    print("0x%04x ^ 0x%04x = 0x%04x" % (a, b, a ^ b))
-    print("~0 = %d" % (~0))
-    print("1>>1 = %d" % (1 >> 1))
-    print("1<<1 = %d" % (1 << 1))
+    # assignment operators
+    print("assignment expression: =, +=, -=, *=, /=, //=, %=, **=")
 
-    # 成员运算符
+    # member operators
     a = 1
     b = [1, 2, 3]
+    print("member operators")
     print("%d in %s = %s" % (a, b, a in b))
     print("%d not in %s = %s" % (a, b, a not in b))
 
-    # 身份运算符
+    # 'is a' operators
     a = [1, 2, 3]
     b = [1, 2, 3]
+    print("'is a' operators")
     print("%s is %s = %s" % (a, b, a is b))
     print("%s is not %s = %s" % (a, b, a is not b))
 
 
+# generator and iterator
+def gen_iter():
+    a = [x for x in range(10)]  # it's an iterable object
+    print(a)
+
+    a = (x for x in range(10))  # it's an iterator object
+    b = []
+    print(a)
+    for x in a:
+        b.append(x)
+    print(b)
+
+
+# redefine range as an generator which is more effecient
+def xrange(n, s=0, step=1):
+    i = s
+    while (i < n):
+        yield i
+        i += step
+
+
+# control flow
+def control_flow():
+    a = 1
+    b = 2
+    if (a > b):
+        print("%d > %d" % (a, b))
+    elif (a < b):
+        print("%d < %d" % (a, b))
+    else:
+        print("%d == %d" % (a, b))
+
+    print("'while loop'")
+    n = 3
+    while (n > 0):
+        print(n)
+        n -= 1
+    print("'for loop'")
+    for n in range(3):
+        print(n)
+
+    print(xrange(3))
+    for n in xrange(3, -1, 1):
+        print(n)
+
+
 def main():
+    print("")
     expression()
+    
+    print("")
+    gen_iter()
+    
+    print("")
+    control_flow()
 
 
 if (__name__ == "__main__"):
