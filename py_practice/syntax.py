@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 
 # expression support by python
 def expression():
@@ -108,6 +110,34 @@ def control_flow():
         print(n)
 
 
+# list directory
+def _dirtree_cb(arg, top, names):
+    for filename in names:
+        print(os.path.join(top, filename))
+
+    
+def dirtree(pathname):
+    if (os.path.exists(pathname)):
+        os.path.walk(pathname, _dirtree_cb, None)
+
+
+# object oriented programing
+class MyDirOp(object):
+
+    def __init__(self):
+        pass
+
+    def dirtree(self, pathname, prefix="+"):
+        if (not os.path.exists(pathname)):
+            return
+
+        print("%s%s" % (prefix, pathname))
+        if (os.path.isdir(pathname)):
+            for filename in os.listdir(pathname):
+                self.dirtree(os.path.join(pathname, filename),
+                             "%s--+" % prefix)
+
+
 def main():
     print("")
     expression()
@@ -117,6 +147,11 @@ def main():
     
     print("")
     control_flow()
+
+    print("")
+    dirtree(".")
+
+    MyDirOp().dirtree(".")    
 
 
 if (__name__ == "__main__"):
