@@ -9,7 +9,7 @@
 #include <sys/file.h>
 
 #define USE_FLOCK 0
-#define MAX_CHILDREN 0
+#define MAX_CHILDREN 10
 #if MAX_CHILDREN
 # define MAX_THREADS 0
 #else
@@ -51,16 +51,16 @@ try_again:
     // if (flock(fd, LOCK_EX) == 0)
     newfd = dup(fd);
     if (flock(newfd, LOCK_EX) == 0)
-#else
-    if (reg_flock_ex(fd, F_SETLK, F_WRLCK) == 0)
+#else        
+    if (reg_flock_ex(fd, F_SETLKW, F_WRLCK) == 0)
 #endif
     {
         fprintf(stdout, "pid %d acquire write lock ok!\n", (int)getpid());
-        sleep(1);
+        // sleep(1);
 #if USE_FLOCK
         flock(newfd, LOCK_UN);
 #else
-        reg_flock_ex(newfd, F_SETLK, F_UNLCK);
+        reg_flock_ex(fd, F_SETLKW, F_UNLCK);
 #endif
     }
     else
@@ -107,6 +107,38 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    if (argc > 1)
+    {
+        int opt = 0;
+        while ((opt = getopt(argc, argv, "ul")) != -1)
+        {
+            switch (opt)
+            {
+            case 'u':
+                reg_flock_ex(newfd, F_SETLKW, F_UNLCK);
+                fprintf(stderr, "unlock\n");
+                break;
+            case 'l':
+                {
+                    struct flock lock;
+                    lock.l_type = F_WRLCK;
+                    lock.l_start = 0;
+                    lock.l_whence = SEEK_SET;
+                    lock.l_len = 0;
+                    lock.l_pid = 0;
+                    if (fcntl(fd, F_GETLK, &lock) == 0)
+                    {
+                        fprintf(stderr, "lock type:%d pid:%d\n", lock.l_type, (int)lock.l_pid);
+                    }
+                }
+                break;
+            default:
+                break;
+            }
+        }
+        exit(0);
+    }    
+
 #if MAX_CHILDREN
     // test process
     for (i = 0; i < MAX_CHILDREN; i++)
@@ -140,6 +172,9 @@ int main(int argc, char *argv[])
 #endif
 
 #if MAX_CHILDREN
+    test_flock(fd);
+    fprintf(stderr, "main thread exiting ...\n");
+    
     // wait process
     i = 0;
     while (i < childcount)
