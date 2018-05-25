@@ -49,7 +49,7 @@ static void traverse(void *n, void *arg)
     if (k)
     {
         fprintf(stdout, "delete %s:%s\n", k->key, k->val);
-        free(k);
+        OPENSSL_free(k);
     }
 }
 
@@ -60,18 +60,21 @@ int main(int argc, char *argv[])
     KEYVALUE *current, *prev, *target;
     int i, r;
 
+    CRYPTO_malloc_debug_init();
+    MemCheck_start();
+
     srand(time(NULL));
     lh = lh_KEYVALUE_new();
     for (i = 0; i < MAX_N; i++)
     {
-        current = (KEYVALUE *)malloc(sizeof(KEYVALUE));
+        current = (KEYVALUE *)OPENSSL_malloc(sizeof(KEYVALUE));
         r = rand() % MAX_N;
         snprintf(current->key, sizeof(current->key), "key_%d", r);
         snprintf(current->val, sizeof(current->val), "val_%d", r);
         if ((prev = lh_KEYVALUE_insert(lh, current)))
         {
             fprintf(stderr, "exits %s:%s\n", prev->key, prev->val);
-            free(prev);
+            OPENSSL_free(prev);
         }
     }
 
@@ -90,5 +93,7 @@ int main(int argc, char *argv[])
     fprintf(stdout, "left %lu items\n", lh_KEYVALUE_num_items(lh));
 
     lh_KEYVALUE_free(lh);
+
+    CRYPTO_mem_leaks_fp(stderr);
     exit(0);
 }

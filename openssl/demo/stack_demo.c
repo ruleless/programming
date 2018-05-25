@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <openssl/crypto.h>
 #include <openssl/safestack.h>
 
 #define MAX_N 10000
@@ -47,12 +48,15 @@ int main(int argc, char *argv[])
     if (argv[1])
         n = atoi(argv[1]);
 
+    CRYPTO_malloc_debug_init();
+    MemCheck_start();
+
     STACK_OF(Foo) *foo_st;
     foo_st = sk_Foo_new(foo_cmp);
     for (i = 0; i < n; i++)
     {
         r = rand();
-        foo = malloc(sizeof(Foo));
+        foo = OPENSSL_malloc(sizeof(Foo));
         foo->n = r % MAX_N;
         sk_Foo_push(foo_st, foo);
     }
@@ -60,9 +64,12 @@ int main(int argc, char *argv[])
     while ((foo = sk_Foo_pop(foo_st)))
     {
         printf("%d ", foo->n);
-        free(foo);
+        OPENSSL_free(foo);
     }
     putchar('\n');
 
+    sk_Foo_free(foo_st);
+
+    CRYPTO_mem_leaks_fp(stderr);
     exit(0);
 }
