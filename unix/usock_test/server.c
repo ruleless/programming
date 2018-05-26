@@ -12,66 +12,66 @@
 
 static int set_nonblock(int fd)
 {
-	int flag;
-	if ((flag = fcntl(fd, F_GETFL)) < 0)
-	{
-		return -1;
-	}
-	if (fcntl(fd, F_SETFL, flag | O_NONBLOCK) < 0)
-	{
-		return -1;
-	}
-	return 0;
+    int flag;
+    if ((flag = fcntl(fd, F_GETFL)) < 0)
+    {
+        return -1;
+    }
+    if (fcntl(fd, F_SETFL, flag | O_NONBLOCK) < 0)
+    {
+        return -1;
+    }
+    return 0;
 }
 
 static int create_unix_socket_nonblock(const char *fname, int type)
 {
-	int sock = -1;
-	struct sockaddr_un servaddr;
-	bzero(&servaddr, sizeof(servaddr));
+    int sock = -1;
+    struct sockaddr_un servaddr;
+    bzero(&servaddr, sizeof(servaddr));
 
-	if (NULL == fname)
-	{
-		return -1;
-	}
+    if (NULL == fname)
+    {
+        return -1;
+    }
 
-	servaddr.sun_family = AF_UNIX;
-	strncpy(servaddr.sun_path, fname, sizeof(servaddr.sun_path) - 1);
+    servaddr.sun_family = AF_UNIX;
+    strncpy(servaddr.sun_path, fname, sizeof(servaddr.sun_path) - 1);
 
-	if ((sock = socket(AF_UNIX, type, 0)) < 0)
-	{
-		return -1;
-	}
+    if ((sock = socket(AF_UNIX, type, 0)) < 0)
+    {
+        return -1;
+    }
 
-	unlink(fname);
+    unlink(fname);
 
-	if (bind(sock, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
-	{
-		close(sock);
-		return -1;
-	}
+    if (bind(sock, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
+    {
+        close(sock);
+        return -1;
+    }
 
-	if (type == SOCK_STREAM)
-	{
-		if ((listen(sock, 5)) < 0)
-		{
-			close(sock);
-			return -1;
-		}
-	}
+    if (type == SOCK_STREAM)
+    {
+        if ((listen(sock, 5)) < 0)
+        {
+            close(sock);
+            return -1;
+        }
+    }
 
-	if (set_nonblock(sock) < 0)
-	{
-		close(sock);
-		return -1;
-	}
+    if (set_nonblock(sock) < 0)
+    {
+        close(sock);
+        return -1;
+    }
 
-	if (chmod(fname, 0777) < 0)
-	{
-		close(sock);
-		return -1;
-	}
-	return sock;
+    if (chmod(fname, 0777) < 0)
+    {
+        close(sock);
+        return -1;
+    }
+    return sock;
 }
 
 int main(int argc, char *argv[])
