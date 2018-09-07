@@ -7,6 +7,35 @@
 #include <time.h>
 #include <string.h>
 
+namespace rhs {
+
+// remove_reference
+template<typename _Tp>
+struct remove_reference
+{
+    typedef _Tp type;
+};
+
+template<typename _Tp>
+struct remove_reference<_Tp&>
+{
+    typedef _Tp type;
+};
+
+template<typename _Tp>
+struct remove_reference<_Tp&&>
+{
+    typedef _Tp type;
+};
+
+template<typename _Tp>
+constexpr typename remove_reference<_Tp>::type&& move(_Tp&& __t)
+{
+    return static_cast<typename remove_reference<_Tp>::type&&>(__t);
+}
+
+} // namespace rhs
+
 static const int kMinSize = 10;
 static const int kMaxSize = 20;
 
@@ -55,7 +84,7 @@ class RightHandSide
                __func__, this, &rhs);
     }
 
-#if 0
+#if 1
     RightHandSide(RightHandSide &&rhs)
             :v_(rhs.v_), n_(rhs.n_)
     {
@@ -91,7 +120,8 @@ int getn()
 RightHandSide foo(RightHandSide rhs)
 {
     printf("enter %s\n", __func__);
-    RightHandSide test(getn());
+    // RightHandSide test(rhs::move(rhs));
+    RightHandSide test(rhs);
     printf("leaving %s ...\n", __func__);
     return test;
 }
@@ -101,9 +131,24 @@ int main(int argc, char *argv[])
     srand(time(NULL));
 
     RightHandSide rhs(getn());
+
+    // 传参时会构造临时对象，
+    // 而构造临时对象是不会调用移动语义版本的构造函数的，
+    // 因为rhs不是右值，临时对象不能夺取其值
     RightHandSide rhs1 = foo(rhs);
+
+    // 被优化为调用构造函数
     RightHandSide rhs2 = RightHandSide(getn());
+
+    // 调用移动构造函数，rhs1的值被夺取
+    RightHandSide rhs3 = (RightHandSide &&)rhs1;
+
+    // 调用移动构造函数，rhs3的值被夺取
+    RightHandSide rhs4(rhs::move(rhs3));
+
+    // 调用移动语义的赋值运算符，临时对象的值被夺取
     rhs2 = RightHandSide(getn());
-    printf("rhs:%p rhs1:%p rhs2:%p\n", &rhs, &rhs1, &rhs2);
+    printf("rhs:%p rhs1:%p rhs2:%p\n\trhs3:%p rhs4:%p\n",
+           &rhs, &rhs1, &rhs2, &rhs3, &rhs4);
     return 0;
 }
