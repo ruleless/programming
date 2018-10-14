@@ -65,6 +65,8 @@ int main(int argc, char *argv[])
     cout << "Call nonstatic member function by 'p': " << p->show();
     cout << "Call nonstatic member function by 'c': " << c.show();
     cout << "Call virtual member function: " << p->display();
+    Base::sfunc();
+    Child::sfunc();
 
     return 0;
 }
