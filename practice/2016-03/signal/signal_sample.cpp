@@ -38,7 +38,7 @@ static void _sig_handler(int signo)
 			printf("we capure signal:%s\n", _g_signalstr[i]);
 			break;
 		}
-	}	
+	}
 }
 
 int main(int argc, char *argv[])
@@ -71,8 +71,8 @@ int main(int argc, char *argv[])
 	for (int i = 0; i < sizeof(_g_signals)/sizeof(int); ++i)
 	{
 		sigaction(_g_signals[i], &oldact, NULL);
-	}	
+	}
 	sigprocmask(SIG_SETMASK, &old_mask, NULL);
-	
+
 	exit(0);
 }

@@ -51,7 +51,7 @@ try_again:
     // if (flock(fd, LOCK_EX) == 0)
     newfd = dup(fd);
     if (flock(newfd, LOCK_EX) == 0)
-#else        
+#else
     if (reg_flock_ex(fd, F_SETLKW, F_WRLCK) == 0)
 #endif
     {
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
             }
         }
         exit(0);
-    }    
+    }
 
 #if MAX_CHILDREN
     // test process
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 #if MAX_CHILDREN
     test_flock(fd);
     fprintf(stderr, "main thread exiting ...\n");
-    
+
     // wait process
     i = 0;
     while (i < childcount)

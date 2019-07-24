@@ -11,7 +11,7 @@ unsigned int sleepex(unsigned int sec) {
 	if (0 == sec) {
 		return alarm(0);
 	}
-	
+
 	struct sigaction newact, oldact;
 	newact.sa_handler = sigAlarm;
 	sigemptyset(&newact.sa_mask);
@@ -29,7 +29,7 @@ unsigned int sleepex(unsigned int sec) {
 
 	suspmask = oldmask;
 	sigdelset(&suspmask, SIGALRM);
-	
+
 	alarm(sec);
 	sigsuspend(&suspmask);
 
@@ -38,7 +38,7 @@ unsigned int sleepex(unsigned int sec) {
 
 	// 恢复信号动作
 	sigaction(SIGALRM, &oldact, NULL);
-	
+
 	return alarm(0);  // alarm(0)不会产生SIGALRM信号
 }
 

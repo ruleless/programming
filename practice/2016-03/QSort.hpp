@@ -10,7 +10,7 @@ int locationPivot(T *arr, int low, int high)
 		if (low < high)
 			arr[low] = arr[high];
 		else
-			break;		
+			break;
 
 		while (low < high && arr[low] <= pivot) ++low;
 		if (low < high)

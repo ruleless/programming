@@ -57,9 +57,9 @@ void* producer(void *arg)
 	{
 		sem_wait(&gShared.nEmpty);
 		// sem_wait(&gShared.mutex);
-		
+
 		gShared.buff[i % N] = i;
-		
+
 		// sem_post(&gShared.mutex);
 		sem_post(&gShared.nStored);
 	}
@@ -72,12 +72,12 @@ void* consumer(void *arg)
 	{
 		sem_wait(&gShared.nStored);
 		// sem_wait(&gShared.mutex);
-		
+
 		if (gShared.buff[i % N] != i)
 		{
 			printf("error! %dth item access conflict, index=%d, curval=%d!\n", i, i%N, gShared.buff[i % N]);
 		}
-		
+
 		// sem_post(&gShared.mutex);
 		sem_post(&gShared.nEmpty);
 	}

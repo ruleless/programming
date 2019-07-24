@@ -25,7 +25,7 @@ void dijkstra(int n, SEdge<T>* v[], int s, T *dist)
 			if (!visited[i] && dist[i] < dist[u])
 				u = i;
 		}
-		
+
 		for (SEdge<T> *e = v[u]; e; e = e->next)
 		{
 			if (!visited[e->to] && dist[u]+e->w < dist[e->to])

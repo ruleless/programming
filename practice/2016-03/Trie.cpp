@@ -4,7 +4,7 @@ struct Trie
 {
 	int n;
 	struct Trie* child[MAX_BYTE_NUM];
-	
+
 	Trie()
 	{
 		n = 0;
@@ -37,7 +37,7 @@ int trie_getword(Trie *root, const char *word)
 {
 	Trie *ptr = root;
 	int n = strlen(word);
-	
+
 	for (int i = 0; i < n; ++i)
 	{
 		unsigned char cur = (unsigned char)word[i];
@@ -48,7 +48,7 @@ int trie_getword(Trie *root, const char *word)
 
 		ptr = ptr->child[cur];
 	}
-	
+
 	return n > 0 ? ptr->n : 0;
 }
 

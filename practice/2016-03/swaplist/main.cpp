@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 		tm.tv_usec = 1000*10;
 		select(0, NULL, NULL, NULL, &tm);
 	}
-	
+
 	pthread_join(tid, NULL);
 	exit(0);
 }

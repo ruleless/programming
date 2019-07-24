@@ -12,13 +12,13 @@ class UTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(test_adjlist);
 	CPPUNIT_TEST(test_dijkstra);
 	CPPUNIT_TEST(test_strstr);
-	CPPUNIT_TEST_SUITE_END();	
+	CPPUNIT_TEST_SUITE_END();
   public:
     UTest();
     virtual ~UTest();
-	
+
 	virtual void setUp();
-	
+
 	virtual void tearDown();
 
 	void test_bsearch();

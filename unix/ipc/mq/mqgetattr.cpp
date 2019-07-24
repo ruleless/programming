@@ -13,6 +13,6 @@ int main(int argc, char *argv[])
 	PRINT_INTVAL(attr.mq_maxmsg);
 	PRINT_INTVAL(attr.mq_msgsize);
 	PRINT_INTVAL(attr.mq_curmsgs);
-	
+
 	exit(0);
 }

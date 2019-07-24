@@ -24,7 +24,7 @@ void floyd(int edge[N][N], int n, int f[N][N])
 int main(int argc, char *argv[])
 {
 	freopen("in.txt", "r", stdin);
-	
+
 	int edge[N][N], n = 0;
 	int f[N][N];
 	while (scanf("%d", &n) != EOF && n)
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		}
 		for (int u = 1; u <= n; ++u)
 		{
-			int cnt;			
+			int cnt;
 			scanf("%d", &cnt);
 			while (cnt--)
 			{
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 				edge[u][v] = w;
 			}
 		}
-		
+
 		floyd(edge, n, f);
 		int s = -1, w = Inf;
 		for (int u = 1; u <= n; ++u)
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 				s = u;
 			}
 		}
-		if (s != -1)			
+		if (s != -1)
 			printf("%d %d\n", s, w);
 		else
 			printf("disjoint\n");

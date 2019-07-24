@@ -7,7 +7,7 @@ int is_primer(int n) {
 	if (n <= 1) {
 		return 0;
 	}
-	
+
 	int square = (int)sqrt(n), i;
 	for (i = 2; i <= square; ++i) {
 		if (n % i == 0) {
@@ -20,7 +20,7 @@ int is_primer(int n) {
 int main(int argc, char *argv[]) {
 	int testcnt;
 	scanf("%d", &testcnt);
-	
+
 	while (testcnt--)
 	{
 		int n;

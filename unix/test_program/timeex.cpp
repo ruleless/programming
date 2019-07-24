@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	struct timeval begT;
 	gettimeofday(&begT, NULL);
 	// uint64_t begT = getTimeStamp();
-	
+
 	char programName[NAME_MAX] = "timeex";
 	if (argc > 1)
 	{
@@ -40,6 +40,6 @@ int main(int argc, char *argv[])
 
 	int64_t diffMSec = (endT.tv_sec-begT.tv_sec)*1000 + (endT.tv_usec-begT.tv_usec)/1000;
 	printf("[%s] run %lldms\n", programName, diffMSec);
-	
+
 	exit(0);
 }

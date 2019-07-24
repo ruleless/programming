@@ -15,7 +15,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(UTest);
 #endif
 #ifndef max
 # define max(a, b) ((a) >= (b) ? (a) : (b))
-#endif 
+#endif
 
 char *reverse(char *str) {
 	char *ptr = str, *endptr = str, tmp;
@@ -33,7 +33,7 @@ char *reverse(char *str) {
 	return str;
 }
 
-char *add(char *a, char *b, char *res) {	
+char *add(char *a, char *b, char *res) {
 	if (strlen(a) == 0 || strlen(b) == 0) {
 		*res = '\0';
 		if (strlen(a) > 0)
@@ -83,7 +83,7 @@ char *mul(char *a, char *b, char *res) {
 	strcpy(fb, b);
 	reverse(fa);
 	reverse(fb);
-	
+
 	int flag = 0, i, j, u, v;
 	for (i = 0; i < a_len; ++i) {
 		ptr = tempres;
@@ -112,10 +112,10 @@ UTest::UTest()
 
 UTest::~UTest()
 {}
-	
+
 void UTest::setUp()
 {}
-	
+
 void UTest::tearDown()
 {}
 
@@ -156,6 +156,6 @@ int main(int argc, char *argv[])
 	CppUnit::TextUi::TestRunner runner;
 	runner.addTest(CppUnit::TestFactoryRegistry::getRegistry().makeTest());
 	runner.run();
-	
+
 	exit(0);
 }

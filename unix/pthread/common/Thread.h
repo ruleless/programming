@@ -12,7 +12,7 @@ public:
 		S_Running,
 		S_Stopped,
 	};
-	
+
 	Thread();
 	virtual ~Thread();
 

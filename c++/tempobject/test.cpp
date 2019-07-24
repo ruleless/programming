@@ -23,11 +23,11 @@ class Obj
 		printf("operator= %p \"%s\"\n", (void *)this, mDesc);
 		return *this;
 	}
-	
+
     virtual ~Obj()
 	{
 		printf("~ destruct %p \"%s\"\n", (void *)this, mDesc);
-	}	
+	}
   private:
 	char mDesc[256];
 };
@@ -37,7 +37,7 @@ class Obj
 namespace situation1
 {
 void testFunc1(const Obj &i)
-{	
+{
 }
 }
 //--------------------------------------------------------------------------
@@ -97,6 +97,6 @@ int main(int argc, char *argv[])
 	}
 #ifndef unix
 	getchar();
-#endif	
+#endif
     return 0;
 }

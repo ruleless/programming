@@ -29,7 +29,7 @@ int daemon()
 
     int fd = open("/dev/null", O_RDWR);
     if (fd == -1)
-	{        
+	{
         return -1;
     }
 
@@ -64,7 +64,7 @@ int daemon()
 int main(int argc, char *argv[])
 {
 	daemon();
-	
+
 	pid_t pid = getpid();
 	char log[256] = {0};
 	while (1)

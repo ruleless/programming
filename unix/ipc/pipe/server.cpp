@@ -38,10 +38,10 @@ int main(int argc, char *argv[])
 				if (writeFd < 0)
 					errQuit();
 				write(writeFd, "ok", 2);
-				
+
 				int readFd = open(echoRPath, O_RDONLY);
 				if (readFd < 0)
-					errQuit();				
+					errQuit();
 
 				char echoBuf[MAX_BUF];
 				int n = 0;
@@ -51,11 +51,11 @@ int main(int argc, char *argv[])
 				}
 
 				printf("client %u stoped.\n");
-				
+
 				exit(0);
 			}
 		}
 	}
-	
+
 	exit(0);
 }

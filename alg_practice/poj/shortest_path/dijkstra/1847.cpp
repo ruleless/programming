@@ -9,8 +9,8 @@ int dijkstra(int edge[N][N], int n, int s, int t)
 {
 	bool bSets[N];
 	int dist[N];
-	
-	memset(bSets, 0, sizeof(bSets));	
+
+	memset(bSets, 0, sizeof(bSets));
 	for (int i = 1; i <= n; ++i)
 	{
 		dist[i] = edge[s][i];
@@ -39,7 +39,7 @@ int dijkstra(int edge[N][N], int n, int s, int t)
 				{
 					if (dist[v] < 0 || dist[u]+edge[u][v] < dist[v])
 						dist[v] = dist[u]+edge[u][v];
-				}				
+				}
 			}
 		}
 	}
@@ -51,13 +51,13 @@ int main(int argc, char *argv[])
 	freopen("in.txt", "r", stdin);
 	memset(gEdge, -1, sizeof(gEdge));
 	gNodeCnt = 0;
-	
-	int s, t;	
+
+	int s, t;
 	scanf("%d%d%d", &gNodeCnt, &s, &t);
 	for (int i = 1; i <= gNodeCnt; ++i)
 	{
 		gEdge[i][i] = 0;
-		
+
 		int k = 0;
 		scanf("%d", &k);
 		for (int j = 0; j < k; ++j)
@@ -76,6 +76,6 @@ int main(int argc, char *argv[])
 	}
 
 	printf("%d\n", dijkstra(gEdge, gNodeCnt, s, t));
-	
+
 	return 0;
 }

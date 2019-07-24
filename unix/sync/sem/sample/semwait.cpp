@@ -21,13 +21,13 @@ int main(int argc, char *argv[])
 	{
 		errQuit("setup sigint failed.");
 	}
-	
+
 	if (-1 == sem_wait(s))
 		errQuit("sem wait failed.");
 	printf("P\n");
 
 	sigaction(SIGINT, &oldAct, NULL);
-	
+
 	sem_close(s);
 	exit(0);
 }

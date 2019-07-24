@@ -59,7 +59,7 @@ void Union(int a, int b)
 	if (rootA < rootB)
 	{
 		parent[rootA] += parent[rootB];
-		parent[rootB] = rootA;		
+		parent[rootB] = rootA;
 	}
 	else
 	{
@@ -70,7 +70,7 @@ void Union(int a, int b)
 
 int main(int argc, char *argv[])
 {
-	freopen("in.txt", "r", stdin);	
+	freopen("in.txt", "r", stdin);
 	while (scanf("%d", &n) != EOF && n > 0)
 	{
 		for (int i = 1; i <= n; ++i)

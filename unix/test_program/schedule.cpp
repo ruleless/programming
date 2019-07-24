@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	{
 		errQuit("too few args!", false);
 	}
-	
+
 	int sec = atoi(argv[1]);
 	sec = max(sec, 1);
 
@@ -28,6 +28,6 @@ int main(int argc, char *argv[])
 
 		sleep(sec);
 	}
-	
+
 	exit(0);
 }

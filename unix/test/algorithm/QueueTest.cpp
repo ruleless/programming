@@ -27,6 +27,6 @@ int main(int argc, char *argv[])
 		printf("%d ", n);
 	}
 	printf("\n");
-	
+
 	exit(0);
 }

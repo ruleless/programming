@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 {
 	sem_init(&gShared.nEmpty, 0, QSIZE);
 	sem_init(&gShared.nStored, 0, 0);
-	
+
 	pthread_t tidProducer;
 	int execTimesOfProducer = 0;
 	pthread_create(&tidProducer, NULL, producer, &execTimesOfProducer);
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
 	sem_destroy(&gShared.nEmpty);
 	sem_destroy(&gShared.nStored);
-	
+
 	exit(0);
 }
 
@@ -62,8 +62,8 @@ void* producer(void *arg)
 	for (;;)
 	{
 		sem_wait(&gShared.nEmpty);
-		
-		gShared.que[i].n = read(STDIN_FILENO, gShared.que[i].buff, BUFF_SIZE);		
+
+		gShared.que[i].n = read(STDIN_FILENO, gShared.que[i].buff, BUFF_SIZE);
 		if (gShared.que[i].n < 0)
 		{
 			errQuit("read error!");
@@ -73,7 +73,7 @@ void* producer(void *arg)
 			sem_post(&gShared.nStored);
 			return NULL;
 		}
-		
+
 		i = (i+1)%QSIZE;
 		(*((int *)arg))++;
 

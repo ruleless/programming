@@ -44,7 +44,7 @@ bool bellman_ford(int edge[N][N], int n, int s, int dist[])
 int main()
 {
 	freopen("in.txt", "r", stdin);
-	
+
 	int F;
 	scanf("%d", &F);
 	while (F--)
@@ -78,7 +78,7 @@ int main()
 				Graph[s][t] = w;
 		}
 
-		int dist[N];		
+		int dist[N];
 		if (bellman_ford(Graph, gNodeCnt, 1, dist))
 			printf("NO\n");
 		else

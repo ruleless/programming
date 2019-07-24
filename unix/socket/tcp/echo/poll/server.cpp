@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 						break;
 					}
 				}
-				
+
 				if (--nReady <= 0) {
 					break;
 				}

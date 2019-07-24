@@ -17,6 +17,6 @@ int main(int argc, char *argv[])
 	{
 		traverseDir(argv[i], printPath);
 	}
-	
+
 	exit(0);
 }

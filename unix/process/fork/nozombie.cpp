@@ -27,6 +27,6 @@ int main(int argc, char *argv[])
 	}
 
 	printf("parent process. pid=%d\n", getpid());
-	
-	exit(0);	
+
+	exit(0);
 }

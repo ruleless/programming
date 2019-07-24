@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	mq_getattr(mqdes, &attr);
 	char *buff = new char [attr.mq_msgsize];
 	memset(buff, 0, sizeof(char)*attr.mq_msgsize);
-	
+
 	for (;;)
 	{
 		int signo;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		if (signo == SIGUSR1)
 		{
 			mq_notify(mqdes, &ev);
-			
+
 			unsigned int prio = 0;
 			int n = 0;
 			while ((n = mq_receive(mqdes, buff, attr.mq_msgsize, &prio)) >= 0)
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 				printf("recv %d (msglen=%d  prio=%d): %s\n", ++msgCount, n, prio, buff);
 				memset(buff, 0, sizeof(char)*attr.mq_msgsize);
 			}
-			
+
 			if (errno != EAGAIN)
 				errQuit("recv err.");
 		}
@@ -54,6 +54,6 @@ int main(int argc, char *argv[])
 
 	delete []buff;
 	buff = NULL;
-	
+
 	exit(0);
 }

@@ -85,7 +85,7 @@ void* consumer(void *arg)
 		{
 			printf("conflict! index=%d curval=%d legalval=%d\n", i%N, gShared.buff[i%N], i);
 		}
-		
+
 		pthread_mutex_unlock(&gShared.readyMutex);
 	}
 	return NULL;

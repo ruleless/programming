@@ -11,7 +11,7 @@ public:
 	Stack()
 	{
 		memset(mStack, 0, sizeof(mStack));
-		mTop = 0;			   
+		mTop = 0;
 	}
 
 	Stack(const Stack &s)
@@ -45,7 +45,7 @@ public:
 	{
 		if (full())
 			return false;
-		
+
 		mStack[mTop++] = e;
 		return true;
 	}
@@ -54,7 +54,7 @@ public:
 	{
 		if (empty())
 			return false;
-		
+
 		*e = mStack[--mTop];
 		return true;
 	}
@@ -65,7 +65,7 @@ public:
 
 		e = mStack[--mTop];
 		return true;
-	}	
+	}
 
 	void clear()
 	{

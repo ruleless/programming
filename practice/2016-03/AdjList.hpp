@@ -43,7 +43,7 @@ class StaticEdgeGenerator
 	{
 		return &edgeStorage[edgecount++];
 	}
-	
+
 	void delEdge(SEdge<T> *e)
 	{
 	}
@@ -51,7 +51,7 @@ class StaticEdgeGenerator
 	~StaticEdgeGenerator() {}
 };
 
-template<int N,		  
+template<int N,
 		 int MaxEdge=N*N,
 		 class T = int,
 		 template<class, int> class EdgeGen=StaticEdgeGenerator>
@@ -60,7 +60,7 @@ class AdjList : public EdgeGen<T, MaxEdge>
   public:
 	typedef SEdge<T> TEdge;
 	TEdge* v[N];
-	
+
     AdjList()
 	{
 		memset(v, 0, sizeof(v));
@@ -85,7 +85,7 @@ class AdjList : public EdgeGen<T, MaxEdge>
 		newE->w = w;
 		newE->next = v[from];
 		v[from] = newE;
-	}	
+	}
 };
 }
 

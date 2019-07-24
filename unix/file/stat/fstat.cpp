@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 		}
 		printf("\n");
 	}
-	
+
 	exit(0);
 }
 
@@ -137,7 +137,7 @@ void printFileMode(const char *pathname, const ColConfig *cfg)
 	static const int s_constMode[] = {
 		S_IRUSR, S_IWUSR, S_IXUSR, S_IRGRP, S_IWGRP, S_IXGRP, S_IROTH, S_IWOTH, S_IXOTH
 	};
-	
+
 	char fileMode[10] = {0};
 	memset(fileMode, 0, sizeof(fileMode));
 	for (int i = 0; i < 9; ++i)

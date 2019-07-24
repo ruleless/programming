@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	sigemptyset(&newSa.sa_mask);
 
 	if (sigaction(SIGUSR1, &newSa, &oldSa) < 0)
-		errQuit("sigaction failed.");	
+		errQuit("sigaction failed.");
 
 	// 为本进程注册消息队列非空的通知
 	struct sigevent ev;

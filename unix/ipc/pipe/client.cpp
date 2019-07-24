@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 	{
 		int len = strlen(buf);
 		write(writeFd, buf, len);
-		
+
 		n = read(readFd, buf, MAX_BUF-1);
 		if (n > 0)
 		{
@@ -44,6 +44,6 @@ int main(int argc, char *argv[])
 			printf("server ret:%s", buf);
 		}
 	}
-	
+
 	exit(0);
 }

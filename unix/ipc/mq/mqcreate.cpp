@@ -11,10 +11,10 @@ int main(int argc, char *argv[])
 		maxMsg = atoi(argv[1]);
 	if (argc > 2)
 		msgSize = atoi(argv[2]);
-	
+
 	attr.mq_maxmsg = maxMsg;
 	attr.mq_msgsize = msgSize;
-	
+
 	mqd_t mqdes = mq_open(MQNAME, O_RDWR|O_CREAT|O_EXCL, 0644, attr.mq_maxmsg ? &attr : NULL);
 	if (mqdes < 0)
 		errQuit("create MQ failed.");

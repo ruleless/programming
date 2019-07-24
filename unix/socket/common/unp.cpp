@@ -25,16 +25,16 @@ int readn(int fd, void *pData, size_t len)
 		ptr += n;
 	}
 
-	return len - leftByte; 
+	return len - leftByte;
 }
 
 int readline(int fd, void *pData, size_t len)
 {
 	char *ptr = (char *)pData;
 	size_t readByte = 0;
-	
+
 	for (readByte = 1; readByte < len; ++readByte)
-	{		
+	{
 	  again:
 		char c;
 		int n = read(fd, &c, 1);

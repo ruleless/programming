@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 			scanf("%d", &edge[i][j]);
 		}
 	}
-   
+
 	int Q;
 	scanf("%d", &Q);
 	while (Q--)
@@ -65,6 +65,6 @@ int main(int argc, char *argv[])
 	}
 
 	printf("%d\n", prim(edge, n));
-	
+
 	return 0;
 }

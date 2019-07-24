@@ -3,15 +3,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h> 
+#include <stdarg.h>
 #include <math.h>
-#include <assert.h> 
+#include <assert.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-#include <string>  
-#include <cstring>  
+#include <string>
+#include <cstring>
 #include <vector>
 #include <map>
 #include <list>
@@ -27,7 +27,7 @@
 
 #include <errno.h>
 #include <float.h>
-#include <pthread.h>	
+#include <pthread.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
@@ -39,7 +39,7 @@
 #include <dirent.h>
 #include <net/if.h>
 #include <netinet/in.h>
-#include <netinet/tcp.h> 
+#include <netinet/tcp.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <tr1/unordered_map>

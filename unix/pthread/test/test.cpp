@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 	pthread_t tids[MAX_THREADS] = {0};
 	ThreadPrintTID printThreads[MAX_THREADS];
 	memset(tids, 0, sizeof(tids));
-	
+
 	for (int i = 0; i < MAX_THREADS; ++i) {
 		printThreads[i].start();
 		if (printThreads[i].getStatus() == Thread::S_Running) {
@@ -22,6 +22,6 @@ int main(int argc, char* argv[]) {
 			pthread_join(tids[i], NULL);
 		}
 	}
-	
+
 	exit(0);
 }

@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	struct shmid_ds shmds;
 	shmctl(shmid, IPC_STAT, &shmds);
 	write(STDOUT_FILENO, ptr, shmds.shm_segsz);
-	
+
 	exit(0);
 }
 

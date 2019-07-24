@@ -29,16 +29,16 @@ class SwapList
 			,mOutList(&mList2)
 	{
 	}
-	
+
     virtual ~SwapList() {}
 
 	void push(T val)
 	{
 		pthread_mutex_lock(&this->mMutex);
-		
+
 		this->mInList->push_back(val);
 		pthread_cond_signal(&this->mCond);
-		
+
 		pthread_mutex_unlock(&this->mMutex);
 	}
 
@@ -51,11 +51,11 @@ class SwapList
 			pthread_mutex_unlock(&this->mMutex);
 			return;
 		}
-		
+
 		TList *temp = this->mInList;
 		this->mInList = this->mOutList;
 		this->mOutList = temp;
-		
+
 		pthread_mutex_unlock(&this->mMutex);
 
 		typename TList::iterator it = this->mOutList->begin();
@@ -72,7 +72,7 @@ class SwapList
 		while (this->mInList->empty())
 		{
 			pthread_cond_wait(&this->mCond, &this->mMutex);
-		}		
+		}
 		pthread_mutex_unlock(&this->mMutex);
 	}
 };

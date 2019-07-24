@@ -28,6 +28,6 @@ int main(int argc, char *argv[])
 	}
 	if (semop(semid, opBufs, n) < 0)
 		errQuit();
-	
+
 	exit(0);
 }

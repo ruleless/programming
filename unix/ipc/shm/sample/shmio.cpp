@@ -28,6 +28,6 @@ int main(int argc, char *argv[])
 		if (cur >= MAX_SIZE)
 			break;
 	}
-	
+
 	exit(0);
 }

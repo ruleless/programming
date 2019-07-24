@@ -43,7 +43,7 @@ template<typename T, int N> class Queue
 	{
 		return (N+1+mRear-mFront) % (N+1);
 	}
-			
+
 	bool pushBack(const T &e)
 	{
 		if (full())

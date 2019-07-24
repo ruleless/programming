@@ -21,7 +21,7 @@ bool spfa(int s, int dist[])
 	for (int u = 1; u <= n; ++u)
 		dist[u] = Inf;
 	dist[s] = 0;
-	
+
 	bool bInQue[N];
 	int nPushSum[N];
 	memset(bInQue, 0, sizeof(bInQue));
@@ -33,7 +33,7 @@ bool spfa(int s, int dist[])
 	{
 		int u = Que[head++];
 		bInQue[u] = false;
-		
+
 		for (int e = vertex[u]; e != -1; e = s_Edge[e].next)
 		{
 			int v = s_Edge[e].to;
@@ -57,7 +57,7 @@ int Graph[N][N], gNodeCnt;
 int main()
 {
 	freopen("in.txt", "r", stdin);
-	
+
 	int F;
 	scanf("%d", &F);
 	while (F--)
@@ -109,7 +109,7 @@ int main()
 			}
 		}
 
-		int dist[N];		
+		int dist[N];
 		if (spfa(1, dist))
 			printf("NO\n");
 		else

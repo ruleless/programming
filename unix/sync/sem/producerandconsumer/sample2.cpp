@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 	if (argc > 1)
 		gItems = atoi(argv[1]);
 	int nProducer = MAX_THREAD;
-	if (argc > 2)		
+	if (argc > 2)
 		nProducer = min(nProducer, atoi(argv[2]));
 
 	// 初始化信号量
@@ -87,7 +87,7 @@ void* producer(void *arg)
 	{
 		sem_wait(&gShared.nEmpty);
 		sem_wait(&gShared.mutex);
-		
+
 		if (gShared.nputval >= gItems)
 		{
 			sem_post(&gShared.nEmpty);
@@ -116,6 +116,6 @@ void* consumer(void *arg)
 		}
 		sem_post(&gShared.nEmpty);
 	}
-	
+
 	return NULL;
 }

@@ -18,10 +18,10 @@ int Rwlock::rdlock() {
 		res = pthread_cond_wait(&rdCond, &mutex);
 	}
 	--waitReaders;
-	
+
 	if (0 == res) // 获取读出锁
 	{
-		++refCount;	 
+		++refCount;
 	}
 
 	pthread_mutex_unlock(&mutex);
@@ -30,7 +30,7 @@ int Rwlock::rdlock() {
 
 int Rwlock::tryrdlock() {
 	int res = 0;
-	
+
 	res = pthread_mutex_lock(&mutex);
 	if (res != 0)
 	{
@@ -71,7 +71,7 @@ int Rwlock::wrlock()
 	{
 		refCount = -1;
 	}
-		
+
 	pthread_mutex_unlock(&mutex);
 	return res;
 }

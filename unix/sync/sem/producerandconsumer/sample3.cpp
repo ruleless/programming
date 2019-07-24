@@ -20,7 +20,7 @@ struct Shared
 	int ngetval;
 
 	sem_t nEmpty, nStored, producerMutex, consumerMutex;
-	
+
 	Shared()
 	{
 		memset(buff, -1, sizeof(buff));
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 	// 创建生产者线程
 	pthread_t tidProducer[MAX_THREAD];
 	int execTimesOfProducer[MAX_THREAD];
-	memset(execTimesOfProducer, 0, sizeof(execTimesOfProducer));	
+	memset(execTimesOfProducer, 0, sizeof(execTimesOfProducer));
 	for (int i = 0; i < nProducer; ++i)
 	{
 		pthread_create(&tidProducer[i], NULL, producer, &execTimesOfProducer[i]);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	{
 		pthread_create(&tidConsumer[i], NULL, consumer, &execTimesOfConsumer[i]);
 	}
-	
+
 	// 等待线程终止
 	for (int i = 0; i < nProducer; ++i)
 	{
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 	{
 		pthread_join(tidConsumer[i], NULL);
 	}
-	
+
 	// 信号量销毁
 	sem_destroy(&gShared.nEmpty);
 	sem_destroy(&gShared.nStored);
@@ -109,7 +109,7 @@ void* producer(void *arg)
 	{
 		sem_wait(&gShared.nEmpty);
 		sem_wait(&gShared.producerMutex);
-		
+
 		if (gShared.nputval >= gItems)
 		{
 			sem_post(&gShared.nEmpty);
@@ -131,7 +131,7 @@ void* consumer(void *arg)
 	for (;;)
 	{
 		// 检查是否已消费完
-		sem_wait(&gShared.consumerMutex);		
+		sem_wait(&gShared.consumerMutex);
 		if (gShared.ngetval >= gItems)
 		{
 			sem_post(&gShared.consumerMutex);
@@ -140,17 +140,17 @@ void* consumer(void *arg)
 
 		// 完成一次消费
 		sem_wait(&gShared.nStored);
-		
+
 		if (gShared.buff[gShared.nget%N] != gShared.ngetval)
 		{
 			printf("confilict! index=%d  curval=%d  legalval=%d\n",
 				   gShared.nget%N, gShared.buff[gShared.nget%N], gShared.nget);
 		}
-		
+
 		gShared.nget++;
 		gShared.ngetval++;
 		(*((int *)arg))++;
-		
+
 		sem_post(&gShared.nEmpty);
 		sem_post(&gShared.consumerMutex);
 	}

@@ -2,7 +2,7 @@
 
 template <class T>
 int bsearch(T *arr, int low, int high, T target)
-{	
+{
 	while (low <= high)
 	{
 		int mid = (low+high) >> 1;

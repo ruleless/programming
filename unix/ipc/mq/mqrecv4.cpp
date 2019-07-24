@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	for (;;)
 		pause();
-	
+
 	exit(0);
 }
 

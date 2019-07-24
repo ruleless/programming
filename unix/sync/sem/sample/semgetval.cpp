@@ -11,6 +11,6 @@ int main(int argc, char *argv[])
 	printf("semval=%d\n", semval);
 
 	sem_close(s);
-	
+
 	exit(0);
 }

@@ -23,6 +23,6 @@ int main(int argc, char *argv[])
 
 	for (int i = 0; i < ds.sem_nsems; ++i)
 		printf("sem %d: %d\n", i, semarr[i]);
-	
+
 	exit(0);
 }

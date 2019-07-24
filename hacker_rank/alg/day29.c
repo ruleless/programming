@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 	scanf("%d", &t);
 	while (t--) {
 		int i, j, res = 0, tmp;
-		
+
 		scanf("%d%d", &n, &k);
 		for (i = 1; i <= n-1; ++i) {
 			for (j = i+1; j <= n; ++j) {

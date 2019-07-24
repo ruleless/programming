@@ -10,9 +10,9 @@ class UTest : public CppUnit::TestFixture
   public:
     UTest();
     virtual ~UTest();
-	
+
 	virtual void setUp();
-	
+
 	virtual void tearDown();
 
 	void testAdd();

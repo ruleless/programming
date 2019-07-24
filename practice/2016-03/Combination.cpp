@@ -3,7 +3,7 @@
 #include <string.h>
 
 static int _getCombination(int cur, int level, int m, int n, int *r)
-{	
+{
 	r[level] = cur;
 	if (level >= n-1)
 	{

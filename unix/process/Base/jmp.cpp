@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 		++val; ++regVal; ++volVal;
 		jumpByCondition(buff);
 	}
-	
+
 	exit(0);
 }
 

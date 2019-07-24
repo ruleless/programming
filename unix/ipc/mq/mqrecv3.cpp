@@ -29,22 +29,22 @@ int main(int argc, char *argv[])
 	mq_getattr(mqdes, &attr);
 
 	int msgCount = 0;
-	char *buff = new char [attr.mq_msgsize];	
+	char *buff = new char [attr.mq_msgsize];
 	memset(buff, 0, sizeof(char)*attr.mq_msgsize);
 
 	struct sigevent ev;
 	ev.sigev_notify = SIGEV_SIGNAL;
 	ev.sigev_signo = SIGUSR1;
 	mq_notify(mqdes, &ev);
-	
+
 	for (;;)
 	{
 		fd_set testSet = rset;
 		int nready = select(gFds[0]+1, &testSet, NULL, NULL, NULL);
 
 		if (nready < 0 && errno != EINTR)
-			errQuit("select err.");			
-		
+			errQuit("select err.");
+
 		if (FD_ISSET(gFds[0], &testSet))
 		{
 			char c;
@@ -62,6 +62,6 @@ int main(int argc, char *argv[])
 				errQuit("recv err.");
 		}
 	}
-	
+
 	exit(0);
 }

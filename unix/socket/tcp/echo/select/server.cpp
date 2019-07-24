@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 	if (listen(listenfd, 5) < 0) {
 		errsys("listen err!", errno);
 	}
-	
+
 	int maxfd = listenfd;
 	fd_set allset, readset;
 	FD_ZERO(&allset);
@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
 				else {	// 此情况不应出现
 					errsys("read err!", errno);
 				}
-				
+
 				if (--nready <= 0)
 					break;
 			}

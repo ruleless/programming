@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	int shmid = shmget(key, 0, 0);
 	if (shmid < 0)
 		errQuit("get shm failed.");
-	
+
 	if (shmctl(shmid, IPC_RMID, NULL) < 0)
 		errQuit("rm shm failed.");
 

@@ -12,6 +12,6 @@ int main(int argc, char *argv[])
 
 	if (semctl(semid, 0, IPC_RMID) == 0)
 		printf("rm ok.\n");
-	
+
 	exit(0);
 }

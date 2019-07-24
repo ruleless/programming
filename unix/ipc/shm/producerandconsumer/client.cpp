@@ -41,6 +41,6 @@ int main(int argc, char *argv[])
 		sem_post(&ptr->mutex);
 		sem_post(&ptr->nStored);
 	}
-	
+
 	exit(0);
 }

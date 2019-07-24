@@ -9,7 +9,7 @@ void encrypt(const char *src, char *out) {
 	int len = strlen(src);
 	int square = (int)sqrt(len);
 	int m = square, n = square;
-	
+
 	if (m*n < len)
 		++n;
 	if (m*n < len)

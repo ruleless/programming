@@ -7,7 +7,7 @@ typedef long long INT64;
 int is_kaprekar_numbers(int n) {
 	INT64 square = (INT64)n*n;
 	INT64 k = 1;
-	while (n / k) {		
+	while (n / k) {
 		k *= 10;
 	}
 	return square/k + square%k == n;

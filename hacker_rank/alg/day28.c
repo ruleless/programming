@@ -31,13 +31,13 @@ int main(int argc, char *argv[])
 			scanf("%s%s", people[i].name, people[i].email);
 			if (strstr(people[i].email, "@gmail.com")) {
 				strncpy(chosen_name[chosen_num++], people[i].name, NAME_MAX-1);
-			}			
+			}
 		}
 
 		qsort(chosen_name, chosen_num, sizeof(chosen_name[0]), cmp);
 		for (i = 0; i < chosen_num; ++i) {
 			puts(chosen_name[i]);
 		}
-	}	
+	}
 	return 0;
 }

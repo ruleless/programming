@@ -24,6 +24,6 @@ int main(int argc, char *argv[])
 	arg.array = semarr;
 	if (semctl(semid, 0, SETALL, arg) < 0)
 		errQuit();
-	
+
 	exit(0);
 }

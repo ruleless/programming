@@ -20,6 +20,6 @@ int main(int argc, char *argvp[])
 	}
 
 	waitpid(childPid, NULL, 0);
-	
+
 	exit(0);
 }

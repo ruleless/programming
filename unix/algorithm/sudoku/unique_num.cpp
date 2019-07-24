@@ -74,7 +74,7 @@ bool dfs(int index)
 int main(int argc, char *argv[])
 {
 	srand((unsigned)time(NULL));
-	
+
 	int n = 0;
 	printf("请输入您要生成的题目个数：\n");
 	scanf("%d", &n);
@@ -91,6 +91,6 @@ int main(int argc, char *argv[])
 			printf("\n");
 		}
 	}
-	
+
 	return 0;
 }

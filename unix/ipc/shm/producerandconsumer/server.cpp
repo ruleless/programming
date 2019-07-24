@@ -45,10 +45,10 @@ int main(int argc, char *argv[])
 		sem_post(&ptr->overflowMutex);
 	}
 
-	// 销毁信号量 
+	// 销毁信号量
 	sem_destroy(&ptr->nEmpty);
 	sem_destroy(&ptr->nStored);
 	sem_destroy(&ptr->mutex);
-	
+
 	exit(0);
 }

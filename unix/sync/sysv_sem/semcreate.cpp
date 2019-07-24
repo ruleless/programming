@@ -14,6 +14,6 @@ int main(int argc, char *argv[])
 		errQuit();
 
 	printf("create sem ok!\n");
-	
+
 	exit(0);
 }

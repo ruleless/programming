@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 	int nConsumer = MAX_THREAD;
 	if (argc > 3)
 		nProducer = min(atoi(argv[3]), MAX_THREAD);
-	
+
 	pthread_t tidProducers[MAX_THREAD];
 	int execTimesOfProducer[MAX_THREAD];
 	for (int i = 0; i < nProducer; ++i)
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 	{
 		pthread_join(tidProducers[i], NULL);
 	}
-	
+
 	for (int i = 0; i < nConsumer; ++i)
 	{
 		pthread_join(tidConsumers[i], NULL);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 	{
 		printf("consumer %d run %d times\n", i, execTimesOfConsumer[i]);
 	}
-	
+
 	exit(0);
 }
 

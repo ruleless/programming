@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 	scanf("%d", &t);
 	while (t--) {
 		scanf("%d%d", &low, &high);
-		
+
 		unsigned long long sum_bits = 0;
 
 		if (high < 0) {

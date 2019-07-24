@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 	if (argc < 2) {
 		errsys("enter your server ip!", 0);
 	}
-	
+
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0) {
 		errsys("create sockfd err.", errno);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 	FD_ZERO(&allset);
 	FD_SET(fileno(stdin), &allset);
 	FD_SET(sockfd, &allset);
-	
+
 	int maxfd = fileno(stdin);
 	if (sockfd > maxfd) {
 		maxfd = sockfd;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
 				continue;
 			}
 		}
-		
+
 		if (FD_ISSET(fileno(stdin), &rset)) {  // 从标准输入读入数据
 			int n = read(fileno(stdin), buff, s_buffSize);
 			if (n > 0) {
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 			--nReady;
 		}
 	}
-	
+
 	exit(0);
 }
 

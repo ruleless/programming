@@ -19,12 +19,12 @@ int main(int argc, char *argv[])
 
 	struct shmid_ds shmds;
 	if (shmctl(shmid, IPC_STAT, &shmds) < 0)
-		errQuit("get shm stat err.");	
+		errQuit("get shm stat err.");
 
 	int shmSize = shmds.shm_segsz;
 	int cur = 0;
 	char buff[BUFF_SIZE];
-	int n = 0;	
+	int n = 0;
 	while ((n = read(STDIN_FILENO, buff, BUFF_SIZE)) > 0)
 	{
 		int cpLen = min(n, shmSize-cur);

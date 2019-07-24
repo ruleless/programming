@@ -39,7 +39,7 @@ bool allnode[N];
 int main(int argc, char *argv[])
 {
 	freopen("in.txt", "r", stdin);
-	
+
 	int s, t;
 	int maxNode = 0;
 	bool bIsTree = true;
@@ -70,8 +70,8 @@ int main(int argc, char *argv[])
 					}
 				}
 			}
-			
-			if (bIsTree)				
+
+			if (bIsTree)
 			{
 				printf("Case %d is a tree.\n", ++casecount);
 			}
