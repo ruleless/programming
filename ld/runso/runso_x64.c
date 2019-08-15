@@ -3,43 +3,68 @@
 #include <dlfcn.h>
 
 
-#define SETUP_STACK                                                     \
-    do {                                                                \
-        int i = 4;                                                      \
-        while (i < argc) {                                              \
-            switch (argv[i][0]) {                                       \
-            case 'i':                                                   \
-                atoi(&argv[i][1]);                                      \
-                __asm__ __volatile__("sub $4, %rsp\n\t"                 \
-                                     "fstpl (%rsp)"                     \
-                                     );                                 \
-                esp += 4;                                               \
-                break;                                                  \
-                                                                        \
-            case 'd':                                                   \
-                atof(&argv[i][1]);                                      \
-                __asm__ __volatile__("sub $8, %rsp\n\t"                 \
-                                     "fstpl (%rsp)"                     \
-                                     );                                 \
-                esp += 8;                                               \
-                break;                                                  \
-                                                                        \
-            case 's':                                                   \
-                __asm__ __volatile__("push %0"                          \
-                                     :                                  \
-                                     : "r"(&argv[i][1]));               \
-                esp += 8;                                               \
-                break;                                                  \
-                                                                        \
-            default:                                                    \
-                fprintf(stderr, "Invalid argument type: %s\n",          \
-                        argv[i]);                                       \
-                goto err;                                               \
-            }                                                           \
-                                                                        \
-            ++i;                                                        \
-        }                                                               \
-    } while (0)
+#define PUSH_ARG_REGS                           \
+    do {                                        \
+        __asm__("push %r9\n\t"                  \
+                "push %r8\n\t"                  \
+                "push %rcx\n\t"                 \
+                "push %rdx\n\t"                 \
+                "push %rsi\n\t"                 \
+                "push %rdi"                     \
+                );                              \
+    } while (0);
+
+#define POP_ARG_REGS                            \
+    do {                                        \
+        __asm__("pop %rdi\n\t"                  \
+                "pop %rsi\n\t"                  \
+                "pop %rdx\n\t"                  \
+                "pop %rcx\n\t"                  \
+                "pop %r8\n\t"                   \
+                "pop %r9"                       \
+                );                              \
+    } while (0);
+
+
+#define SETUP_STACK                                             \
+    do {                                                        \
+        __asm__ __volatile__("mov %rsp, %rbx");                 \
+                                                                \
+        int i = 4;                                              \
+        while (i < argc) {                                      \
+            switch (argv[i][0]) {                               \
+            case 'i':                                           \
+                __asm__ __volatile__("mov %0, (%%rbx)\n\t"      \
+                                     "add $8, %%rbx"            \
+                                     :                          \
+                                     : "a"(atoi(&argv[i][1]))   \
+                                     );                         \
+                break;                                          \
+                                                                \
+            case 'd':                                           \
+                atof(&argv[i][1]);                              \
+                __asm__ __volatile__("sub $8, %rsp\n\t"         \
+                                     "fstpl (%rsp)"             \
+                                     );                         \
+                esp += 8;                                       \
+                break;                                          \
+                                                                \
+            case 's':                                           \
+                __asm__ __volatile__("push %0"                  \
+                                     :                          \
+                                     : "r"(&argv[i][1]));       \
+                esp += 8;                                       \
+                break;                                          \
+                                                                \
+            default:                                            \
+                fprintf(stderr, "Invalid argument type: %s\n",  \
+                        argv[i]);                               \
+                goto err;                                       \
+            }                                                   \
+                                                                \
+            ++i;                                                \
+        }                                                       \
+    } while (0);
 
 
 #define RESTORE_STACK                           \
@@ -83,7 +108,10 @@ int main(int argc, char *argv[])
             int (*func_decl)() = func;
             long esp = 0;
 
+            PUSH_ARG_REGS;
             SETUP_STACK;
+            POP_ARG_REGS;
+
             int ret = func_decl();
             RESTORE_STACK;
 
