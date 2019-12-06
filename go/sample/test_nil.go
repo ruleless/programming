@@ -29,5 +29,5 @@ func main() {
     fmt.Println("[]int:", intArr)
     fmt.Println("map[int] int:", mapVar)
     fmt.Println("interface{}:", interfaceVar)
-    fmt.Println("char int:", chanVar)
+    fmt.Println("chan int:", chanVar)
 }
