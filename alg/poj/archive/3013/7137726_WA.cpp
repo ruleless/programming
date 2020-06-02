@@ -1,0 +1,104 @@
+#include <cstdlib>
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+struct Edge
+{
+    int to,w,next;
+}edge[100006];
+int p[50006],ec;
+int pp[50006],n;
+
+const __int64 MAX=0x7fffffffffffffff;
+
+struct Node
+{
+    int u,d;
+    bool operator<(const struct Node a)const
+    {
+        return d>a.d;
+    }
+}t1,t2;
+
+__int64 dist[50006],ans;
+int visited[50006];
+
+priority_queue<struct Node>que;
+
+__int64 dij()
+{
+    int i,j,k;
+    for(i=2;i<=n;i++)
+    {
+        dist[i]=MAX;
+    }
+    dist[1]=0;
+    t1.u=1;
+    t1.d=0;
+    que.push(t1);
+    memset(visited,0,sizeof(visited));
+    while(!que.empty())
+    {
+        t1=que.top();
+        que.pop();
+        k=t1.u;
+        visited[k]=1;
+        for(i=p[k];i!=-1;i=edge[i].next)
+        {
+            if(!visited[edge[i].to]&&dist[k]+edge[i].w<dist[edge[i].to])
+            {
+                dist[edge[i].to]=dist[k]+edge[i].w;
+                t2.d=dist[edge[i].to];
+                t2.u=edge[i].to;
+                que.push(t2);
+            }
+        }
+    }
+    for(i=2;i<=n;i++)
+    {
+        if(dist[i]>=MAX)
+        {
+            return -1;
+        }
+        else 
+        {
+            ans+=dist[i]*pp[i];
+        }
+    }
+    return ans;
+}
+
+int main(int argc, char *argv[])
+{
+    //freopen("in.txt","r",stdin);
+    int i,j,k,t,m;
+    scanf("%d",&t);
+    while(t--)
+    {
+        scanf("%d%d",&n,&m);
+        for(i=1;i<=n;i++)
+        {
+            scanf("%d",&pp[i]);
+        }
+        memset(p,-1,sizeof(p));
+        ec=0;
+        while(m--)
+        {
+            scanf("%d%d%d",&i,&j,&k);
+            edge[ec].to=j;
+            edge[ec].w=k;
+            edge[ec].next=p[i];
+            p[i]=ec++;
+            edge[ec].to=i;
+            edge[ec].w=k;
+            edge[ec].next=p[j];
+            p[j]=ec++;
+        }
+        ans=0;
+        printf("%I64d\n",dij());
+    }
+    //system("PAUSE");
+    return EXIT_SUCCESS;
+}

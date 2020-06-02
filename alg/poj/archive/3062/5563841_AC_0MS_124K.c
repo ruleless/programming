@@ -1,0 +1,1 @@
+main(){char s[20];while(gets(s))puts(s);}
