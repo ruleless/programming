@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <fcntl.h>
+#include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <sys/socket.h>
 #include <sys/epoll.h>
 
 #define MAX_EVENTS 10
@@ -22,6 +23,68 @@ static int setnonblocking(int fd)
     return 0;
 }
 
+static void echo(int fd)
+{
+    char buf[4096], addrtext[INET_ADDRSTRLEN] = {0};
+    const char *bufptr;
+    int n, left, sent;
+    struct sockaddr_in cli_addr;
+    socklen_t addrlen;
+
+    for (;;) {
+        n = read(fd, buf, sizeof(buf));
+        if (n < 0) {
+            if (errno == EINTR) {
+                continue;
+            } else if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                break; /* read next time */
+            }
+
+            perror("read from client error");
+            close(fd);
+            break; /* occur error */
+        } else if (n == 0) {
+            if (getpeername(fd, (struct sockaddr *)&cli_addr, &addrlen) == 0) {
+                inet_ntop(AF_INET, &cli_addr.sin_addr, addrtext, sizeof(addrtext));
+                fprintf(stderr, "client closed, client: %s:%d\n",
+                        addrtext, ntohs(cli_addr.sin_port));
+            } else {
+                fprintf(stderr, "client closed\n");
+            }
+
+            close(fd);
+            break; /* connection closed */
+        }
+
+        /* n > 0 */
+
+        bufptr = buf;
+        left = n;
+
+  write_again:
+        sent = write(fd, bufptr, left);
+        if (sent < 0) {
+            if (errno == EINTR) {
+                goto write_again;
+            } else if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                goto write_again;
+            }
+
+            perror("write to client error");
+            break; /* occur error */
+        }
+
+        left -= sent;
+        if (left > 0) {
+            bufptr += sent;
+        }
+
+        if (n < sizeof(buf)) {
+            break; /* no more data */
+        }
+    }
+}
+
 int main(int argc, char *argv[])
 {
     struct epoll_event ev, events[MAX_EVENTS];
@@ -30,12 +93,14 @@ int main(int argc, char *argv[])
     struct sockaddr_in servaddr, addr;
     socklen_t addrlen;
 
+    /* create socket */
     listen_sock = socket(AF_INET, SOCK_STREAM, 0);
     if (listen_sock < 0) {
         perror("create listen sock err");
         exit(EXIT_FAILURE);
     }
 
+    /* bind server address */
     servaddr.sin_family = AF_INET;
     servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     servaddr.sin_port = htons(60000);
@@ -49,6 +114,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    /* call epoll */
     epollfd = epoll_create1(0);
     if (epollfd == -1) {
         perror("epoll_create1");
@@ -62,6 +128,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    /* event loop */
     for (;;) {
         nfds = epoll_wait(epollfd, events, MAX_EVENTS, -1);
         if (nfds == -1) {
@@ -87,7 +154,7 @@ int main(int argc, char *argv[])
                     exit(EXIT_FAILURE);
                 }
             } else {
-                // do_use_fd(events[n].data.fd);
+                echo(events[n].data.fd);
             }
         }
     }
