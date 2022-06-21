@@ -78,10 +78,6 @@ static void echo(int fd)
         if (left > 0) {
             bufptr += sent;
         }
-
-        if (n < sizeof(buf)) {
-            break; /* no more data */
-        }
     }
 }
 
@@ -145,7 +141,16 @@ int main(int argc, char *argv[])
                     exit(EXIT_FAILURE);
                 }
 
+                /* test: 预读部分数据后，看是否还能触发事件 */
+                char tmpbuf[4] = {0};
+                int recvlen = read(conn_sock, tmpbuf, sizeof(tmpbuf) - 1);
+                if (recvlen > 0) {
+                    printf("preread: %s\n", tmpbuf);
+                    write(conn_sock, tmpbuf, recvlen);
+                }
+
                 setnonblocking(conn_sock);
+
                 ev.events = EPOLLIN | EPOLLET;
                 ev.data.fd = conn_sock;
                 if (epoll_ctl(epollfd, EPOLL_CTL_ADD, conn_sock,
