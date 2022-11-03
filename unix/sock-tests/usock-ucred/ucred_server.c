@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <unistd.h>
 #include <errno.h>
 #include <sys/stat.h>
@@ -89,7 +91,7 @@ static void recv_ucred(int ufd)
         .iov_len = sizeof(buf)-1,
     };
     CMSG_BUFFER_TYPE(CMSG_SPACE(sizeof(struct ucred)) +
-                     CMSG_SPACE(sizeof(int))) control;
+                     CMSG_SPACE(sizeof(int)))control;
     struct msghdr msghdr = {
         .msg_iov = &iovec,
         .msg_iovlen = 1,
@@ -98,9 +100,12 @@ static void recv_ucred(int ufd)
     };
 
     struct cmsghdr *cmsg;
+    struct ucred *ucred;
+    int n;
 
 again:
-    if (recvmsg(ufd, &msghdr, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) < 0) {
+    n = recvmsg(ufd, &msghdr, MSG_DONTWAIT|MSG_CMSG_CLOEXEC);
+    if (n < 0) {
         if (errno == EINTR) {
             goto again;
         }
@@ -108,6 +113,7 @@ again:
         fprintf(stderr, "recvmsg error, reason: %s\n", strerror(errno));
         return;
     }
+    buf[n] = '\0';
 
     CMSG_FOREACH(cmsg, &msghdr) {
         if (cmsg->cmsg_level == SOL_SOCKET && cmsg->cmsg_type == SCM_RIGHTS) {
@@ -116,12 +122,14 @@ again:
                    cmsg->cmsg_type == SCM_CREDENTIALS &&
                    cmsg->cmsg_len == CMSG_LEN(sizeof(struct ucred)))
         {
-            assert(!ucred);
             ucred = (struct ucred *)CMSG_DATA(cmsg);
+            fprintf(stdout, "<pid: %z, uid: %z, %gid: %z> ",
+                    ucred->pid, ucred->uid, ucred->gid);
         } else {
             fprintf(stderr, "unknwon control message\n");
         }
     }
+    fprintf(stdout, "%s\n", buf);
 }
 
 int main(int argc, char *argv[])
