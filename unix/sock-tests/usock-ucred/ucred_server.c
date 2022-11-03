@@ -61,6 +61,12 @@ static int create_unix_socket(const char *fname, int type, int timeout)
         return -1;
     }
 
+    /* 要求传递客户端标识 */
+    int value = 1;
+    if (setsockopt(sock, SOL_SOCKET, SO_PASSCRED, &value, sizeof(value))) {
+        return -1;
+    }
+
     unlink(fname);
 
     if (bind(sock, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
@@ -123,7 +129,7 @@ again:
                    cmsg->cmsg_len == CMSG_LEN(sizeof(struct ucred)))
         {
             ucred = (struct ucred *)CMSG_DATA(cmsg);
-            fprintf(stdout, "<pid: %z, uid: %z, %gid: %z> ",
+            fprintf(stdout, "<pid: %d, uid: %d, gid: %d> ",
                     ucred->pid, ucred->uid, ucred->gid);
         } else {
             fprintf(stderr, "unknwon control message\n");
